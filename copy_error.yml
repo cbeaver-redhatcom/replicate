@@ -11,10 +11,12 @@
       ansible.builtin.shell: 
         cmd: "/usr/bin/tree /var/lib/awx/projects/"
       register: tree
+      delegate_to: localhost
 
     - name: print dir structure of /var/lib/awx/projects/
       ansible.builtin.debug:
         var: tree.stdout_lines
+      delegate_to: localhost
         
     - name: transfer file to remote location
       ansible.builtin.copy:
