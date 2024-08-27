@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: true
+  gather_facts: false
+  vars: 
+    source: 
+    destination"
+  tasks:
+
+    - name: transfer file to remote location
+      ansible.builtin.copy:
+        src: "{{ source }}"
+        dest: "{{ destination }}"
+        backup: yes
