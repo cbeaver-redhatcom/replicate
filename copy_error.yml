@@ -7,7 +7,7 @@
     destination: "/tmp"
   tasks:
 
-    - name: grab dir structure of /var/lib/awx/projects/
+    - name: grab dir structure of /var/lib/awx/
       ansible.builtin.shell: 
         cmd: "ls -al /var/lib/awx/projects/"
       register: tree
