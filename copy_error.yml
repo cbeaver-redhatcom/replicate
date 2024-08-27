@@ -3,7 +3,7 @@
   become: true
   gather_facts: false
   vars: 
-    source: "/var/lib/awx/projects/files/replicate"
+    source: "files/replicate"
     destination: "/tmp"
   tasks:
 
@@ -20,6 +20,6 @@
         
     - name: transfer file to remote location
       ansible.builtin.copy:
-        src: "{{ source }}"
+        src: "/runner/project/{{ source }}"
         dest: "{{ destination }}"
         backup: yes
