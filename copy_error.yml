@@ -11,12 +11,12 @@
       ansible.builtin.shell: 
         cmd: "ls -al /var/lib/"
       register: tree
-      delegate_to: localhost
+      #delegate_to: localhost
 
     - name: print dir structure of /var/lib/
       ansible.builtin.debug:
         var: tree.stdout_lines
-      delegate_to: localhost
+      #delegate_to: localhost
         
     - name: transfer file to remote location
       ansible.builtin.copy:
