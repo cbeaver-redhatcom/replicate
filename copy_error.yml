@@ -9,7 +9,7 @@
 
     - name: grab dir structure of /var/lib/
       ansible.builtin.shell: 
-        cmd: "ls -al /var/lib/"
+        cmd: "pwd; ls -al ."
       register: tree
       #delegate_to: localhost
 
