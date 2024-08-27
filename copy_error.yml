@@ -3,10 +3,19 @@
   become: true
   gather_facts: false
   vars: 
-    source: 
-    destination:
+    source: "/var/lib/awx/projects/files/replicate"
+    destination: "/tmp"
   tasks:
 
+    - name: grab dir structure of /var/lib/awx/projects/
+      ansible.builtin.shell: 
+        cmd: "/usr/bin/tree /var/lib/awx/projects
+      register: tree
+
+    - name: print dir structure of /var/lib/awx/projects/
+      ansible.builtin.debug:
+        var: tree.stdout_lines
+        
     - name: transfer file to remote location
       ansible.builtin.copy:
         src: "{{ source }}"
