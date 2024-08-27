@@ -9,7 +9,7 @@
 
     - name: grab dir structure of /var/lib/awx/projects/
       ansible.builtin.shell: 
-        cmd: "/usr/bin/tree /var/lib/awx/projects
+        cmd: "/usr/bin/tree /var/lib/awx/projects/"
       register: tree
 
     - name: print dir structure of /var/lib/awx/projects/
