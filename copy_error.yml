@@ -9,11 +9,11 @@
 
     - name: grab dir structure of /var/lib/awx/
       ansible.builtin.shell: 
-        cmd: "ls -al /var/lib/awx/projects/"
+        cmd: "ls -al /var/lib/awx/"
       register: tree
       delegate_to: localhost
 
-    - name: print dir structure of /var/lib/awx/projects/
+    - name: print dir structure of /var/lib/awx/
       ansible.builtin.debug:
         var: tree.stdout_lines
       delegate_to: localhost
