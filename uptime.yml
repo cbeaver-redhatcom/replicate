@@ -35,7 +35,7 @@
 
 ---
 - name: Get Uptime
-  hosts: db.beaverdam.com
+  hosts: all
   gather_facts: true
   vars:
     csv_filename: "report.csv"
