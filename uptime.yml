@@ -1,27 +1,3 @@
-# ---
-# - name: Get Uptime
-#   hosts: all
-#   gather_facts: true
-#   vars:
-#     csv_filename: "report.csv"
-#     headers: "Hostname,Uptime_In_Days"
-#   tasks:
-
-#   - name: Write uptime in CSV
-#     ansible.builtin.debug:
-#       #msg: "{{ ansible_facts.hostname }},{{ ansible_facts.uptime_seconds / 86400 | int }}"
-#       msg: "{{ hostvars[item]['ansible_facts']['fqdn'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"  
-#     loop: "{{ groups['all'] }}"
-
-#   - name: Write uptime in CSV
-#     ansible.builtin.lineinfile:
-#       dest: "/tmp/uptime.csv"
-#       line: "{{ hostvars[item]['ansible_facts']['fqdn'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"
-#       create: true 
-#       state: present
-#     delegate_to: localhost
-#     loop: "{{ groups['all'] }}"
-
 ################################################################################
 # The following information has been provided by Red Hat, but is outside the   #
 # scope of the posted Service Level Agreements and support procedures          #
@@ -37,9 +13,6 @@
 - name: Get Uptime
   hosts: all
   gather_facts: true
-  vars:
-    csv_filename: "report.csv"
-    headers: "Hostname,Uptime_In_Days"
   tasks:
 
   - name: Template 
@@ -47,33 +20,6 @@
       src: /runner/project/templates/uptime.j2
       dest: /tmp/uptime.csv
     delegate_to: localhost
-
-  # - name: Write uptime in CSV
-  #   ansible.builtin.debug:
-  #     #msg: "{{ ansible_facts.hostname }},{{ ansible_facts.uptime_seconds / 86400 | int }}"
-  #     msg: "{{ hostvars[item]['ansible_facts']['hostname'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"  
-  #   loop: "{{ groups['all'] }}"
-
-  # - name: Write uptime in CSV in EE
-  #   ansible.builtin.lineinfile:
-  #     dest: "/tmp/uptime.csv"
-  #     line: "{{ hostvars[item]['ansible_hostname'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"
-  #     create: true 
-  #     state: present
-  #     owner: root 
-  #   #delegate_to: localhost
-  #   loop: "{{ groups['all'] }}"
-
-  # - name: Grab CSV file in EE
-  #   ansible.builtin.command:
-  #     cmd: cat /tmp/uptime.csv
-  #   register: CSV_content
-  #   delegate_to: localhost
-
-  # - name: Print CSV file in EE
-  #   ansible.builtin.debug:
-  #     var: CSV_content.stdout_lines
-  #   delegate_to: localhost
 
 - name: Get Uptime
   hosts: controller.beaverdam.com
