@@ -1,4 +1,5 @@
-Host,Uptime
-{% for host in groups['all'] %}
-{{ hostvars[host]['ansible_fqdn']}},{{ hostvars[host]['ansible_uptime_seconds'] / 86400 | int }}
+Hostname,Uptime
+{% for device in groups['all'] %}
+{% set devinfo = hostvars[device]['dev_info'] %}
+{{ devinfo['hostname'] }},{{ devinfo['uptime'] }}
 {% endfor %}
