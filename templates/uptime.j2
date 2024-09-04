@@ -1,4 +1,4 @@
 Hostname,Uptime
 {% for device in groups['all'] %}
-{{ hostvars[device]['ansible_hostname'] }},{{ hostvars[device]['ansible_uptime_seconds'] }}
+{{ hostvars[device] }},{{ hostvars[device] }}
 {% endfor %}
