@@ -1,0 +1,5 @@
+Hostname,Uptime
+{% for device in groups['all'] %}
+{% set devinfo = hostvars[device]['dev_info'] %}
+{{ devinfo['hostname'] }},{{ devinfo['uptime'] }}
+{% endfor %}
