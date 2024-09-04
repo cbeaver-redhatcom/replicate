@@ -1,0 +1,4 @@
+Host,Uptime
+{% for host in groups['all'] %}
+{{ hostvars[host]['ansible_fqdn']}},{{ hostvars[host]['ansible_uptime_seconds'] / 86400 | int }}
+{% endfor %}
