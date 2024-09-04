@@ -51,7 +51,7 @@
   - name: Write uptime in CSV in EE
     ansible.builtin.lineinfile:
       dest: "/tmp/uptime.csv"
-      line: "{{ {% if hostvars[item]['ansible_facts']['fqdn'] is defined %} hostvars[item]['ansible_facts']['fqdn'] }} {% else %} hostvars[item]['ansible_facts']['hostname'] {% endif %},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"
+      line: "{{ hostvars[item]['ansible_facts']['hostname'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"
       create: true 
       state: present
       owner: root 
