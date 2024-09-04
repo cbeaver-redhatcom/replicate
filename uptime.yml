@@ -45,7 +45,7 @@
   - name: Write uptime in CSV
     ansible.builtin.debug:
       #msg: "{{ ansible_facts.hostname }},{{ ansible_facts.uptime_seconds / 86400 | int }}"
-      msg: "{{ hostvars[item]['ansible_facts']['fqdn'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"  
+      msg: "{{ hostvars[item]['ansible_facts']['hostname'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"  
     loop: "{{ groups['all'] }}"
 
   - name: Write uptime in CSV in EE
