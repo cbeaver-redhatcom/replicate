@@ -1,6 +1,41 @@
+# ---
+# - name: Get Uptime
+#   hosts: all
+#   gather_facts: true
+#   vars:
+#     csv_filename: "report.csv"
+#     headers: "Hostname,Uptime_In_Days"
+#   tasks:
+
+#   - name: Write uptime in CSV
+#     ansible.builtin.debug:
+#       #msg: "{{ ansible_facts.hostname }},{{ ansible_facts.uptime_seconds / 86400 | int }}"
+#       msg: "{{ hostvars[item]['ansible_facts']['fqdn'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"  
+#     loop: "{{ groups['all'] }}"
+
+#   - name: Write uptime in CSV
+#     ansible.builtin.lineinfile:
+#       dest: "/tmp/uptime.csv"
+#       line: "{{ hostvars[item]['ansible_facts']['fqdn'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"
+#       create: true 
+#       state: present
+#     delegate_to: localhost
+#     loop: "{{ groups['all'] }}"
+
+################################################################################
+# The following information has been provided by Red Hat, but is outside the   #
+# scope of the posted Service Level Agreements and support procedures          #
+# (https://access.redhat.com/support/offerings/production/). The information   #
+# is provided as-is and any configuration settings or installed applications   #
+# made from the information in this article could make the Operating System    #
+# unsupported by Red Hat Global Support Services. The intent of this article   #
+# is to provide information to accomplish the system's needs. Use of the       #
+# information in this article at the user's own risk.                          #
+################################################################################
+
 ---
 - name: Get Uptime
-  hosts: all
+  hosts: db.beaverdam.com
   gather_facts: true
   vars:
     csv_filename: "report.csv"
@@ -13,11 +48,36 @@
       msg: "{{ hostvars[item]['ansible_facts']['fqdn'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"  
     loop: "{{ groups['all'] }}"
 
-  - name: Write uptime in CSV
+  - name: Write uptime in CSV in EE
     ansible.builtin.lineinfile:
       dest: "/tmp/uptime.csv"
       line: "{{ hostvars[item]['ansible_facts']['fqdn'] }},{{ hostvars[item]['ansible_facts']['uptime_seconds'] / 86400 | int }}"
       create: true 
       state: present
+      owner: root 
     delegate_to: localhost
     loop: "{{ groups['all'] }}"
+
+  - name: Grab CSV file in EE
+    ansible.builtin.command:
+      cmd: cat /tmp/uptime.csv
+    register: CSV_content
+    delegate_to: localhost
+
+  - name: Print CSV file in EE
+    ansible.builtin.debug:
+      var: CSV_content.stdout_lines
+    delegate_to: localhost
+
+- name: Get Uptime
+  hosts: controller.beaverdam.com
+  gather_facts: false
+  become: true
+  tasks:
+
+  - name: Push generated CSV file to controller
+    ansible.builtin.copy:
+      src: /tmp/uptime.csv
+      dest: /tmp/uptime.csv
+      owner: root
+      mode: '0644'
