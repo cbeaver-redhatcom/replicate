@@ -1,4 +1,4 @@
 Hostname,Uptime
 {% for device in groups['all'] %}
-{{ hostvars[device]['inventory_hostname'] }},
+{{ hostvars[device]['inventory_hostname'] }},{{ hostvars[device] }}
 {% endfor %}
