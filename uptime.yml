@@ -44,7 +44,7 @@
 
   - name: Template 
     ansible.builtin.template:
-      src: templates/templates/uptime.j2
+      src: /runner/project/templates/uptime.j2
       dest: /tmp/uptime.csv
     delegate_to: localhost
 
