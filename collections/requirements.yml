@@ -1,4 +1,4 @@
 ---
 collections:
   - name: redhat.rhel_system_roles
-    src: https://hub.beaverdam.com
+    #src: https://hub.beaverdam.com
